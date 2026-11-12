@@ -12,7 +12,13 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "Cosmetic Website Korea",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
+  title: {
+    default: "Cosmetic Website Korea",
+    template: "%s | Cosmetic Website Korea",
+  },
   description: "Korean skincare and cosmetic shop",
 };
 

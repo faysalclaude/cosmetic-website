@@ -1,13 +1,117 @@
 {
   "Common": {
-    "brand": "코스메틱 코리아",
+    "brand": "벨라마루",
     "products": "제품",
     "blog": "블로그",
     "login": "로그인",
-    "cart": "장바구니"
+    "cart": "장바구니",
+    "menu": "메뉴",
+    "close": "닫기",
+    "addToCart": "장바구니 담기",
+    "new": "NEW",
+    "learnMore": "자세히 보기"
+  },
+  "Announcement": {
+    "text": "🔥 플래시 세일: 전 스킨케어 제품 최대 50% 할인!"
+  },
+  "Header": {
+    "searchPlaceholder": "제품, 피부 고민을 검색하세요",
+    "search": "검색"
+  },
+  "Cart": {
+    "title": "장바구니",
+    "empty": "장바구니가 비어 있습니다",
+    "continue": "쇼핑 계속하기",
+    "subtotal": "상품 금액",
+    "viewCart": "장바구니 보기",
+    "checkout": "주문하기",
+    "remove": "삭제"
   },
   "Home": {
-    "title": "코스메틱 웹사이트",
-    "subtitle": "피부 고민에 맞는 맞춤 스킨케어를 만나보세요."
+    "featuredTitle": "베스트 제품",
+    "featuredSubtitle": "피부 고민에 맞춘 임상 처방 스킨케어",
+    "hashtag": "#스킨케어",
+    "whereTitle": "어디서 구매할지 고민되시나요?",
+    "whereSubtitle": "나만의 스킨케어 루틴에 꼭 맞는 제품을 만나보세요!",
+    "blogTitle": "블로그",
+    "viewAll": "전체 보기"
+  },
+  "Footer": {
+    "connected": "벨라마루와 함께하세요",
+    "subscribeText": "신제품 소식, 피부과 전문의 인사이트, 맞춤 적립 혜택을 가장 먼저 받아보세요.",
+    "emailPlaceholder": "이메일 주소",
+    "subscribe": "구독하기",
+    "subscribed": "구독해 주셔서 감사합니다!",
+    "help": "고객지원",
+    "contact": "문의하기",
+    "terms": "이용약관",
+    "privacy": "개인정보처리방침",
+    "refund": "교환 및 환불",
+    "shop": "쇼핑",
+    "shopByCountry": "국가별 쇼핑",
+    "skinAnswer": "나의 피부, 나의 해답",
+    "faq": "자주 묻는 질문",
+    "reviews": "리뷰",
+    "followUs": "팔로우",
+    "company": "상호",
+    "ceo": "대표자",
+    "bizNo": "사업자등록번호",
+    "ecommerceNo": "통신판매업 신고번호",
+    "address": "주소",
+    "tel": "전화",
+    "email": "이메일",
+    "demoNote": "※ 데모 사이트입니다. 위 사업자 정보는 예시입니다.",
+    "rights": "All rights reserved."
+  },
+    "ProductList": {
+    "home": "홈",
+    "title": "전체 제품",
+    "sortBy": "정렬",
+    "featured": "추천순",
+    "priceAsc": "낮은 가격순",
+    "priceDesc": "높은 가격순",
+    "discount": "할인율순",
+    "filters": "필터",
+    "category": "카테고리",
+    "all": "전체",
+    "skinCare": "스킨케어",
+    "hairCare": "헤어케어",
+    "makeup": "메이크업",
+    "priceRange": "가격대",
+    "min": "최소",
+    "max": "최대",
+    "apply": "적용",
+    "results": "{count}개의 제품",
+    "noResults": "조건에 맞는 제품이 없습니다.",
+    "reset": "필터 초기화",
+    "searchFor": "검색어: {q}",
+    "wishlist": "찜하기"
+  },
+    "Product": {
+    "home": "홈",
+    "products": "제품",
+    "wishlist": "찜하기",
+    "highlights": "핵심 포인트",
+    "howToUse": "사용 방법",
+    "shippingReturns": "배송 및 반품",
+    "shippingText": "택배 배송(영업일 기준 1~3일). 도서산간 지역은 추가 배송비가 발생할 수 있습니다. 상품 수령 후 7일 이내 교환·반품이 가능합니다. (※ 데모 문구)",
+    "freeShipping": "{amount} 이상 무료배송",
+    "securePayment": "안전한 결제",
+    "easyReturns": "7일 이내 교환·반품",
+    "related": "함께 보면 좋은 제품"
+  },
+  "CartPage": {
+    "title": "장바구니",
+    "empty": "장바구니가 비어 있습니다",
+    "continue": "쇼핑 계속하기",
+    "summary": "주문 요약",
+    "subtotal": "상품 금액",
+    "shipping": "배송비",
+    "free": "무료",
+    "total": "총 결제 금액",
+    "freeLeft": "{amount} 더 담으면 무료배송!",
+    "freeReached": "무료배송 혜택이 적용되었습니다",
+    "checkout": "주문하기",
+    "remove": "삭제"
   }
 }

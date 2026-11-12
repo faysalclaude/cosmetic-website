@@ -1,13 +1,117 @@
 {
   "Common": {
-    "brand": "Cosmetic Korea",
+    "brand": "Bella Maru",
     "products": "Products",
     "blog": "Blog",
     "login": "Login",
-    "cart": "Cart"
+    "cart": "Cart",
+    "menu": "Menu",
+    "close": "Close",
+    "addToCart": "Add to cart",
+    "new": "NEW",
+    "learnMore": "LEARN MORE"
+  },
+  "Announcement": {
+    "text": "🔥 FLASH SALE: Get Up to 50% Discount on All Skincare Products!"
+  },
+  "Header": {
+    "searchPlaceholder": "Search for products, skin concerns...",
+    "search": "Search"
+  },
+  "Cart": {
+    "title": "Your Cart",
+    "empty": "Cart is empty",
+    "continue": "Click continue shopping",
+    "subtotal": "Subtotal",
+    "viewCart": "View cart",
+    "checkout": "Checkout",
+    "remove": "Remove"
   },
   "Home": {
-    "title": "Cosmetic Website",
-    "subtitle": "Discover skincare tailored to your skin concerns."
+    "featuredTitle": "Best Sellers",
+    "featuredSubtitle": "Clinical skincare formulated for your skin concerns",
+    "hashtag": "#Skincare",
+    "whereTitle": "Not Sure Where you want to buy?",
+    "whereSubtitle": "Discover the perfect products tailored to your unique skincare routine!",
+    "blogTitle": "Blog posts",
+    "viewAll": "View all"
+  },
+  "Footer": {
+    "connected": "connected with Bellamaru",
+    "subscribeText": "Subscribe to stay ahead on product drops, dermatologist insights, and curated loyalty rewards.",
+    "emailPlaceholder": "Email address",
+    "subscribe": "Subscribe",
+    "subscribed": "Thank you for subscribing!",
+    "help": "HELP",
+    "contact": "Contact Us",
+    "terms": "Terms and Services",
+    "privacy": "Privacy Policy",
+    "refund": "Return and Refund",
+    "shop": "SHOP",
+    "shopByCountry": "Shop by Country",
+    "skinAnswer": "Your Skin, Your Answer",
+    "faq": "FAQ",
+    "reviews": "Reviews",
+    "followUs": "Follow Us",
+    "company": "Company",
+    "ceo": "CEO",
+    "bizNo": "Business Reg. No.",
+    "ecommerceNo": "E-commerce Reg. No.",
+    "address": "Address",
+    "tel": "Tel",
+    "email": "Email",
+    "demoNote": "* This is a demo site. The business details above are placeholders.",
+    "rights": "All rights reserved."
+  },
+    "ProductList": {
+    "home": "Home",
+    "title": "All Products",
+    "sortBy": "Sort",
+    "featured": "Featured",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "discount": "Biggest discount",
+    "filters": "Filters",
+    "category": "Category",
+    "all": "All",
+    "skinCare": "Skin Care",
+    "hairCare": "Hair Care",
+    "makeup": "Makeup",
+    "priceRange": "Price Range",
+    "min": "Min",
+    "max": "Max",
+    "apply": "Apply",
+    "results": "{count} products",
+    "noResults": "No products match your filters.",
+    "reset": "Reset filters",
+    "searchFor": "Search: {q}",
+    "wishlist": "Add to wishlist"
+  },
+    "Product": {
+    "home": "Home",
+    "products": "Products",
+    "wishlist": "Add to wishlist",
+    "highlights": "Highlights",
+    "howToUse": "How to use",
+    "shippingReturns": "Shipping & returns",
+    "shippingText": "Courier delivery in 1 to 3 business days. Remote areas may incur an extra fee. Exchanges and returns are accepted within 7 days of receipt. (Demo text)",
+    "freeShipping": "Free shipping over {amount}",
+    "securePayment": "Secure payment",
+    "easyReturns": "7-day returns",
+    "related": "You may also like"
+  },
+  "CartPage": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "continue": "Continue shopping",
+    "summary": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total": "Total",
+    "freeLeft": "Add {amount} more for free shipping!",
+    "freeReached": "You have free shipping",
+    "checkout": "Checkout",
+    "remove": "Remove"
   }
 }

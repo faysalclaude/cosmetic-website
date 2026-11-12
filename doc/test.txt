@@ -1,0 +1,23 @@
+eta holo tader page pic. tumi etar theke better page design dibe but brand value bhulbe na. ar emon kichu nei ja free te background remove kore emon proffesonal animation banabe. ba tumi ekhane kono code likhe dibe ja auto ei kaj korbe kono api ba pay kora lagbe na??
+
+D:\Cosmetic website korea\cosmetic-website> npm install @imgly/background-removal onnxruntime-web@1.21.0-dev.20250206-d981b153d3
+npm error code ERESOLVE
+npm error ERESOLVE unable to resolve dependency tree
+npm error
+npm error While resolving: cosmetic-website@0.1.0
+npm error Found: onnxruntime-web@1.21.0-dev.20250206-d981b153d3
+npm error node_modules/onnxruntime-web
+npm error   onnxruntime-web@"1.21.0-dev.20250206-d981b153d3" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer onnxruntime-web@"1.21.0" from @imgly/background-removal@1.7.0
+npm error node_modules/@imgly/background-removal
+npm error   @imgly/background-removal@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\faysa\AppData\Local\npm-cache\_logs\2026-11-12T07_01_34_512Z-eresolve-report.txt
+npm error A complete log of this run can be found in: C:\Users\faysa\AppData\Local\npm-cache\_logs\2026-11-12T07_01_34_512Z-debug-0.log
+PS D:\Cosmetic website korea\cosmetic-website> 
