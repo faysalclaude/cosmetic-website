@@ -1,0 +1,13 @@
+{
+  "Common": {
+    "brand": "Cosmetic Korea",
+    "products": "Products",
+    "blog": "Blog",
+    "login": "Login",
+    "cart": "Cart"
+  },
+  "Home": {
+    "title": "Cosmetic Website",
+    "subtitle": "Discover skincare tailored to your skin concerns."
+  }
+}
