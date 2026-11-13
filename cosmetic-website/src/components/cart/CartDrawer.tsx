@@ -62,6 +62,7 @@ export default function CartDrawer() {
                     accent={product.accent}
                     label={loc(product.name, locale)}
                     className="h-20 w-20 shrink-0 rounded-lg"
+                    src={product.images[0]}
                   />
                   <div className="min-w-0 flex-1">
                     <p className="line-clamp-2 text-sm font-medium">

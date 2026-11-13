@@ -4,22 +4,25 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { products } from "@/lib/products";
 import { loc } from "@/lib/utils";
+import type { Product } from "@/types";
 import ProductVisual from "@/components/product/ProductVisual";
 
-export default function HeroSlider() {
+export default function HeroSlider({ products }: { products: Product[] }) {
   const t = useTranslations("Common");
   const locale = useLocale();
   const [index, setIndex] = useState(0);
   const total = products.length;
 
   useEffect(() => {
+    if (total < 2) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % total), 6000);
     return () => clearInterval(id);
   }, [total]);
 
-  const slide = products[index];
+  if (total === 0) return null;
+
+  const slide = products[index % total];
   const name = loc(slide.name, locale);
 
   return (
@@ -52,38 +55,43 @@ export default function HeroSlider() {
             tint="#ffffff00"
             accent={slide.accent}
             label={name}
+            src={slide.showcase?.imageUrl ?? slide.images[0]}
             className="mx-auto aspect-square w-full max-w-md rounded-3xl"
           />
         </div>
       </div>
 
-      <button
-        onClick={() => setIndex((i) => (i - 1 + total) % total)}
-        className="absolute top-1/2 left-3 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white md:block"
-        aria-label="previous"
-      >
-        <ChevronLeft />
-      </button>
-      <button
-        onClick={() => setIndex((i) => (i + 1) % total)}
-        className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white md:block"
-        aria-label="next"
-      >
-        <ChevronRight />
-      </button>
-
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-        {products.map((p, i) => (
+      {total > 1 && (
+        <>
           <button
-            key={p.id}
-            onClick={() => setIndex(i)}
-            aria-label={`slide ${i + 1}`}
-            className={`h-2 rounded-full transition-all ${
-              i === index ? "w-6 bg-brand" : "w-2 bg-ink/20"
-            }`}
-          />
-        ))}
-      </div>
+            onClick={() => setIndex((i) => (i - 1 + total) % total)}
+            className="absolute top-1/2 left-3 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white md:block"
+            aria-label="previous"
+          >
+            <ChevronLeft />
+          </button>
+          <button
+            onClick={() => setIndex((i) => (i + 1) % total)}
+            className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white md:block"
+            aria-label="next"
+          >
+            <ChevronRight />
+          </button>
+
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+            {products.map((p, i) => (
+              <button
+                key={p.id}
+                onClick={() => setIndex(i)}
+                aria-label={`slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${
+                  i === index % total ? "w-6 bg-brand" : "w-2 bg-ink/20"
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }

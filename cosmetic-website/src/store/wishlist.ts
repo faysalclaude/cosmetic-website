@@ -17,6 +17,6 @@ export const useWishlistStore = create<WishlistState>()(
             : [...state.ids, id],
         })),
     }),
-    { name: "cosmetic-wishlist" },
+    { name: "cosmetic-wishlist-v2" },
   ),
 );

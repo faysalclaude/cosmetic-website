@@ -48,7 +48,7 @@ export const useCartStore = create<CartState>()(
       close: () => set({ isOpen: false }),
     }),
     {
-      name: "cosmetic-cart",
+      name: "cosmetic-cart-v2",
       partialize: (state) => ({ items: state.items }),
     },
   ),

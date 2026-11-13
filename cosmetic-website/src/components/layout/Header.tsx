@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { Link, useRouter } from "@/i18n/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { selectCount, useCartStore } from "@/store/cart";
 import { useMounted } from "@/lib/use-mounted";
 import { siteConfig } from "@/lib/site";
+import UserMenu from "@/components/auth/UserMenu";
 
 const logoClass = "font-serif font-semibold text-brand-dark";
 
@@ -107,14 +108,7 @@ export default function Header() {
                 {mounted ? count : 0}
               </span>
             </button>
-            <Link
-              href="/login"
-              className="flex items-center gap-1 text-sm font-medium hover:text-brand"
-              aria-label={t("Common.login")}
-            >
-              <User size={22} />
-              <span className="hidden lg:inline">{t("Common.login")}</span>
-            </Link>
+            <UserMenu />
             <div className="md:hidden">
               <LanguageSwitcher />
             </div>

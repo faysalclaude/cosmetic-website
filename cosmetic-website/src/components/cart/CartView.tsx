@@ -54,6 +54,7 @@ export default function CartView() {
                     accent={product.accent}
                     label={name}
                     className="h-24 w-24 rounded-2xl sm:h-28 sm:w-28"
+                    src={product.images[0]}
                   />
                 </Link>
                 <div className="flex min-w-0 flex-1 flex-col">

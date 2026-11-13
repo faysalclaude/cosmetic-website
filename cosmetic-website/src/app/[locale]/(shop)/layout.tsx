@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import FloatingCartTab from "@/components/cart/FloatingCartTab";
+import SmoothScroll from "@/components/layout/SmoothScroll"
 
 export default function ShopLayout({
   children,
@@ -11,6 +12,7 @@ export default function ShopLayout({
 }) {
   return (
     <>
+      <SmoothScroll />
       <AnnouncementBar />
       <Header />
       <main>{children}</main>

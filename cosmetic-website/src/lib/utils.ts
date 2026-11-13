@@ -12,6 +12,7 @@ export function formatKRW(value: number, locale: string): string {
     maximumFractionDigits: 0,
   }).format(value);
 }
+
 export function shippingFor(subtotal: number): number {
   if (subtotal === 0) return 0;
   return subtotal >= siteConfig.shipping.freeOver ? 0 : siteConfig.shipping.fee;

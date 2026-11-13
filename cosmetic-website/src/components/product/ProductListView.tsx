@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Link, useRouter } from "@/i18n/navigation";
-import { products } from "@/lib/products";
 import type { Category, Product } from "@/types";
 import ProductCard from "./ProductCard";
 
@@ -15,7 +14,7 @@ const categories: Category[] = ["skinCare", "hairCare", "makeup"];
 
 const discountOf = (p: Product) => (p.compareAt ? 1 - p.price / p.compareAt : 0);
 
-export default function ProductListView() {
+export default function ProductListView({ products }: { products: Product[] }) {
   const t = useTranslations("ProductList");
   const router = useRouter();
   useLocale();

@@ -18,15 +18,15 @@ import { useWishlistStore } from "@/store/wishlist";
 import { useMounted } from "@/lib/use-mounted";
 import { siteConfig } from "@/lib/site";
 import { formatKRW, loc } from "@/lib/utils";
-import { getDetails } from "@/lib/product-details";
-import { products } from "@/lib/products";
 import type { Product } from "@/types";
 import ProductVisual from "./ProductVisual";
 import ProductCard from "./ProductCard";
 import ScrollShowcase from "@/components/showcase/ScrollShowcase";
 import { defaultChapters } from "@/components/showcase/copy";
 
-export default function ProductDetailView({ product }: { product: Product }) {
+type Props = { product: Product; related: Product[] };
+
+export default function ProductDetailView({ product, related }: Props) {
   const t = useTranslations("Product");
   const tc = useTranslations("Common");
   const locale = useLocale();
@@ -37,14 +37,16 @@ export default function ProductDetailView({ product }: { product: Product }) {
   const wished = useWishlistStore((s) => s.ids.includes(product.id));
   const toggleWish = useWishlistStore((s) => s.toggle);
   const [qty, setQty] = useState(1);
+  const [active, setActive] = useState(0);
 
   const name = loc(product.name, locale);
-  const details = getDetails(product.slug);
+  const highlights = product.highlights[lang];
+  const howToUse = product.howToUse[lang];
   const discount = product.compareAt
     ? Math.round((1 - product.price / product.compareAt) * 100)
     : 0;
-  const related = products.filter((p) => p.id !== product.id).slice(0, 3);
   const isWished = mounted && wished;
+  const gallery = product.images;
 
   return (
     <>
@@ -58,13 +60,13 @@ export default function ProductDetailView({ product }: { product: Product }) {
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* visual */}
           <div className="lg:sticky lg:top-24 lg:self-start">
             <div className="relative overflow-hidden rounded-3xl border border-line">
               <ProductVisual
                 tint={product.tint}
                 accent={product.accent}
                 label={name}
+                src={gallery[active]}
                 className="aspect-square w-full"
               />
               {discount > 0 && (
@@ -73,9 +75,31 @@ export default function ProductDetailView({ product }: { product: Product }) {
                 </span>
               )}
             </div>
+
+            {gallery.length > 1 && (
+              <div className="mt-4 grid grid-cols-5 gap-3">
+                {gallery.map((src, i) => (
+                  <button
+                    key={src}
+                    onClick={() => setActive(i)}
+                    aria-label={`image ${i + 1}`}
+                    className={`overflow-hidden rounded-xl border-2 ${
+                      i === active ? "border-brand" : "border-transparent"
+                    }`}
+                  >
+                    <ProductVisual
+                      tint={product.tint}
+                      accent={product.accent}
+                      label={name}
+                      src={src}
+                      className="aspect-square w-full"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* buy box */}
           <div>
             <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
               {loc(product.area, locale)}
@@ -99,11 +123,11 @@ export default function ProductDetailView({ product }: { product: Product }) {
               {loc(product.summary, locale)}
             </p>
 
-            {details && (
+            {highlights.length > 0 && (
               <div className="mt-6">
                 <h2 className="mb-3 text-sm font-semibold">{t("highlights")}</h2>
                 <ul className="space-y-2">
-                  {details.highlights[lang].map((h) => (
+                  {highlights.map((h) => (
                     <li key={h} className="flex items-center gap-2 text-sm">
                       <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-soft text-brand">
                         <Check size={12} />
@@ -173,15 +197,13 @@ export default function ProductDetailView({ product }: { product: Product }) {
             </div>
 
             <div className="mt-8 border-t border-line">
-              {details && (
+              {howToUse && (
                 <details open className="group border-b border-line py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between font-semibold">
                     {t("howToUse")}
                     <ChevronDown size={18} className="transition-transform group-open:rotate-180" />
                   </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {loc(details.howToUse, locale)}
-                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{howToUse}</p>
                 </details>
               )}
               <details className="group border-b border-line py-4">
@@ -198,26 +220,36 @@ export default function ProductDetailView({ product }: { product: Product }) {
         </div>
       </div>
 
-      {/* animated brand story in the product's own colours */}
       <div className="mt-16">
         <ScrollShowcase
-          palette={{ accent: product.accent, soft: product.tint, deep: "#4a0a25" }}
+          palette={
+            product.showcase
+              ? {
+                  accent: product.showcase.accent,
+                  soft: product.showcase.soft,
+                  deep: product.showcase.deep,
+                }
+              : { accent: product.accent, soft: product.tint, deep: "#4a0a25" }
+          }
+          imageUrl={product.showcase?.imageUrl}
           name={name}
           chapters={defaultChapters(locale, name)}
           heightVh={300}
         />
       </div>
 
-      <section className="container-page py-20">
-        <h2 className="mb-10 text-center text-2xl font-bold md:text-3xl">
-          {t("related")}
-        </h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {related.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+      {related.length > 0 && (
+        <section className="container-page py-20">
+          <h2 className="mb-10 text-center text-2xl font-bold md:text-3xl">
+            {t("related")}
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

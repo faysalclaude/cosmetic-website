@@ -34,6 +34,7 @@ export default function ProductCard({ product }: { product: Product }) {
             accent={product.accent}
             label={name}
             className="aspect-square w-full transition-transform duration-500 group-hover:scale-105"
+            src={product.images[0]}
           />
         </Link>
 

@@ -23,51 +23,57 @@ const mix = (a: RGB, b: RGB, t: number): RGB => [
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = () => reject(new Error("Could not load the image"));
     img.src = src;
   });
 }
 
-// Finds the most "colourful" colour of the (transparent-background) product.
+// Throws when the colours cannot be read (for example a blocked cross-site image).
+export async function extractPaletteStrict(imageUrl: string): Promise<Palette> {
+  const img = await loadImage(imageUrl);
+  const size = 48;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) throw new Error("Canvas is not supported");
+
+  ctx.drawImage(img, 0, 0, size, size);
+  const { data } = ctx.getImageData(0, 0, size, size);
+
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let weight = 0;
+
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] < 200) continue; // skip transparent pixels
+    const max = Math.max(data[i], data[i + 1], data[i + 2]);
+    const min = Math.min(data[i], data[i + 1], data[i + 2]);
+    const saturation = max === 0 ? 0 : (max - min) / max;
+    const w = saturation * saturation + 0.02; // favour saturated colours
+    r += data[i] * w;
+    g += data[i + 1] * w;
+    b += data[i + 2] * w;
+    weight += w;
+  }
+
+  if (weight === 0) throw new Error("No colour found");
+
+  const accent: RGB = [r / weight, g / weight, b / weight];
+  return {
+    accent: toHex(accent),
+    soft: toHex(mix(accent, [255, 255, 255], 0.88)),
+    deep: toHex(mix(accent, [0, 0, 0], 0.7)),
+  };
+}
+
+// Never throws: falls back to the brand palette.
 export async function extractPalette(imageUrl: string): Promise<Palette> {
   try {
-    const img = await loadImage(imageUrl);
-    const size = 48;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return defaultPalette;
-
-    ctx.drawImage(img, 0, 0, size, size);
-    const { data } = ctx.getImageData(0, 0, size, size);
-
-    let r = 0;
-    let g = 0;
-    let b = 0;
-    let weight = 0;
-
-    for (let i = 0; i < data.length; i += 4) {
-      if (data[i + 3] < 200) continue; // skip transparent pixels
-      const max = Math.max(data[i], data[i + 1], data[i + 2]);
-      const min = Math.min(data[i], data[i + 1], data[i + 2]);
-      const saturation = max === 0 ? 0 : (max - min) / max;
-      const w = saturation * saturation + 0.02; // favour saturated colours
-      r += data[i] * w;
-      g += data[i + 1] * w;
-      b += data[i + 2] * w;
-      weight += w;
-    }
-
-    if (weight === 0) return defaultPalette;
-
-    const accent: RGB = [r / weight, g / weight, b / weight];
-    return {
-      accent: toHex(accent),
-      soft: toHex(mix(accent, [255, 255, 255], 0.88)),
-      deep: toHex(mix(accent, [0, 0, 0], 0.7)),
-    };
+    return await extractPaletteStrict(imageUrl);
   } catch {
     return defaultPalette;
   }
