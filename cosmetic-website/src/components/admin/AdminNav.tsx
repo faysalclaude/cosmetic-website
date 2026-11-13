@@ -5,6 +5,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 const items = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/products", label: "Products" },
+    { href: "/admin/categories", label: "Categories" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/login-logs", label: "Login logs" },
 ];

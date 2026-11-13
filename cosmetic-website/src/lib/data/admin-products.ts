@@ -136,3 +136,34 @@ export async function getAdminShowcase(productId: string): Promise<AdminShowcase
   if (error) throw new Error(error.message.slice(0, 200));
   return (data as AdminShowcase | null) ?? null;
 }
+export type AdminCategory = {
+  id: string;
+  name_ko: string;
+  name_en: string;
+  description_ko: string | null;
+  description_en: string | null;
+  sort_order: number;
+  productCount: number;
+};
+
+export async function getAdminCategories(): Promise<AdminCategory[]> {
+  const admin = createAdminClient();
+  const [cats, prods] = await Promise.all([
+    admin
+      .from("categories")
+      .select("id, name_ko, name_en, description_ko, description_en, sort_order")
+      .order("sort_order", { ascending: true }),
+    admin.from("products").select("category_id"),
+  ]);
+  if (cats.error) throw new Error(cats.error.message.slice(0, 200));
+
+  const counts = new Map<string, number>();
+  for (const p of prods.data ?? []) {
+    counts.set(p.category_id, (counts.get(p.category_id) ?? 0) + 1);
+  }
+
+  return (cats.data ?? []).map((c) => ({
+    ...(c as Omit<AdminCategory, "productCount">),
+    productCount: counts.get(c.id as string) ?? 0,
+  }));
+}

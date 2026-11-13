@@ -1,6 +1,12 @@
 export type Localized = { ko: string; en: string };
 
-export type Category = "skinCare" | "hairCare" | "makeup";
+export type Category = string;
+
+export type CategoryInfo = {
+  id: string;
+  name: Localized;
+  description: Localized;
+};
 
 export type ProductShowcase = {
   imageUrl: string;

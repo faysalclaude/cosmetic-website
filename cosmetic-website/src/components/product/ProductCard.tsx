@@ -66,9 +66,12 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <span className="mb-2 w-fit rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
+        <Link
+          href={`/category/${product.category}`}
+          className="mb-2 w-fit rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand hover:bg-brand hover:text-white"
+        >
           {loc(product.area, locale)}
-        </span>
+        </Link>
         <Link href={`/product/${product.slug}`}>
           <h3 className="line-clamp-2 min-h-[3rem] font-semibold group-hover:text-brand">
             {name}

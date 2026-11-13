@@ -101,9 +101,12 @@ export default function ProductDetailView({ product, related }: Props) {
           </div>
 
           <div>
-            <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
+            <Link
+              href={`/category/${product.category}`}
+              className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand hover:bg-brand hover:text-white"
+            >
               {loc(product.area, locale)}
-            </span>
+            </Link>
             <h1 className="mt-4 text-3xl leading-tight font-bold tracking-tight md:text-4xl">
               {name}
             </h1>

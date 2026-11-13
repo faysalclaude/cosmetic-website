@@ -1,6 +1,7 @@
 export const siteConfig = {
   logoText: "BELLAMARU",
   marketplaces: ["Coupang", "Naver Smart Store", "Amazon"],
+  shipping: { fee: 3000, freeOver: 50000 },
   business: {
     company: "(DEMO) 데모컴퍼니",
     ceo: "홍길동",
@@ -9,6 +10,6 @@ export const siteConfig = {
     address: "서울특별시 강남구 테헤란로 000",
     tel: "02-0000-0000",
     email: "hello@example.com",
-    shipping: { fee: 3000, freeOver: 50000 },
+    
   },
 };

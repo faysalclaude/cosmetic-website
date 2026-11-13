@@ -33,15 +33,17 @@ type Row = {
   is_new: boolean;
   product_images: { url: string; sort_order: number }[] | null;
   product_showcases: ShowcaseRow | ShowcaseRow[] | null;
+  categories: { name_ko: string; name_en: string } | { name_ko: string; name_en: string }[] | null;
 };
 
 const SELECT =
-  "*, product_images(url, sort_order), product_showcases(image_url, accent, soft, deep, is_approved)";
+  "*, categories(name_ko, name_en), product_images(url, sort_order), product_showcases(image_url, accent, soft, deep, is_approved)";
 
 function mapRow(r: Row): Product {
   const sc = Array.isArray(r.product_showcases)
     ? r.product_showcases[0]
     : r.product_showcases;
+  const cat = Array.isArray(r.categories) ? r.categories[0] : r.categories;
 
   return {
     id: r.id,
@@ -49,7 +51,7 @@ function mapRow(r: Row): Product {
     name: { ko: r.name_ko, en: r.name_en },
     heroTag: { ko: r.hero_tag_ko ?? r.name_ko, en: r.hero_tag_en ?? r.name_en },
     summary: { ko: r.summary_ko, en: r.summary_en },
-    area: { ko: r.area_ko, en: r.area_en },
+        area: { ko: cat?.name_ko ?? r.area_ko, en: cat?.name_en ?? r.area_en },
     howToUse: { ko: r.how_to_use_ko ?? "", en: r.how_to_use_en ?? "" },
     highlights: { ko: r.highlights_ko ?? [], en: r.highlights_en ?? [] },
     price: r.price,
@@ -71,6 +73,7 @@ function mapRow(r: Row): Product {
           }
         : undefined,
   };
+  
 }
 
 export const getProducts = cache(async (): Promise<Product[]> => {
