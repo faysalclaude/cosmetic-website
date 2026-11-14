@@ -9,6 +9,7 @@ import { formatDateTimeLocale } from "@/lib/format";
 import { formatKRW } from "@/lib/utils";
 import StatusBadge from "@/components/orders/StatusBadge";
 import ProductVisual from "@/components/product/ProductVisual";
+import PayNowButton from "@/components/orders/PayNowButton";
 
 export const metadata: Metadata = {
   title: "Order",
@@ -17,14 +18,14 @@ export const metadata: Metadata = {
 
 type Props = {
   params: Promise<{ orderNo: string }>;
-  searchParams: Promise<{ placed?: string }>;
+    searchParams: Promise<{ placed?: string; payment?: string }>;
 };
 
 const STEPS = ["paid", "preparing", "shipped", "delivered"] as const;
 
 export default async function OrderPage({ params, searchParams }: Props) {
   const { orderNo } = await params;
-  const { placed } = await searchParams;
+  const { placed, payment } = await searchParams;
   const locale = await getLocale();
   const t = await getTranslations("Order");
 
@@ -41,6 +42,12 @@ export default async function OrderPage({ params, searchParams }: Props) {
   const closed = order.status === "cancelled" || order.status === "refunded";
   const stepIndex = STEPS.indexOf(order.status as (typeof STEPS)[number]);
   const showBank = order.payment_method === "bank_transfer" && order.status === "awaiting_deposit";
+  const needsPayment = order.status === "pending" && order.payment_method !== "bank_transfer";
+  const firstName = order.order_items[0]
+    ? (lang === "en" ? order.order_items[0].name_en : order.order_items[0].name_ko)
+    : "";
+  const orderName =
+    order.order_items.length > 1 ? `${firstName} +${order.order_items.length - 1}` : firstName;
 
   return (
     <div className="container-page py-12">
@@ -72,7 +79,24 @@ export default async function OrderPage({ params, searchParams }: Props) {
           ))}
         </ol>
       )}
-
+      
+      {needsPayment && (
+        <section className="mb-8 rounded-3xl border-2 border-brand bg-white p-6 text-center md:p-8">
+          <p className="text-sm text-muted">
+            {payment === "failed" ? t("paymentFailed") : t("payPending")}
+          </p>
+          <PayNowButton
+            orderNo={order.order_no}
+            total={order.total}
+            method={order.payment_method}
+            orderName={orderName}
+            recipient={order.recipient_name}
+            phone={order.phone}
+            email={profile.email ?? undefined}
+          />
+        </section>
+      )}
+      
       {showBank && (
         <section className="mb-8 rounded-3xl border-2 border-brand bg-white p-6 md:p-8">
           <h2 className="mb-4 text-lg font-semibold">{t("bankInfo")}</h2>

@@ -201,6 +201,7 @@
     "naver": "네이버페이",
     "card": "신용·체크카드",
     "soon": "준비 중",
+    "onlineGuide": "주문하기를 누르면 결제창이 열립니다. 결제가 완료되면 주문이 확정됩니다.",
     "bankGuide": "주문 후 안내되는 계좌로 입금해 주세요. 입금이 확인되면 배송이 시작됩니다.",
     "depositor": "입금자명",
     "depositorHint": "비워두면 받는 분 이름으로 입금해 주세요.",
@@ -226,7 +227,8 @@
       "notLoggedIn": "로그인이 필요합니다.",
       "productUnavailable": "판매가 종료되었거나 구매할 수 없는 상품이 있습니다.",
       "outOfStock": "{name}의 재고가 부족합니다.",
-      "postcodeUnavailable": "주소 검색을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+      "postcodeUnavailable": "주소 검색을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+            "methodUnavailable": "선택하신 결제 수단은 아직 사용할 수 없습니다."
     }
   },
   "Order": {
@@ -251,6 +253,10 @@
     "carrier": "택배사",
     "trackingNo": "운송장번호",
     "backToMyPage": "마이페이지로 돌아가기",
+        "payNow": "결제하기",
+    "payWorking": "결제창을 여는 중...",
+    "payPending": "결제가 아직 완료되지 않았습니다. 아래 버튼으로 결제를 진행해 주세요.",
+    "paymentFailed": "결제가 완료되지 않았습니다. 다시 시도해 주세요.",
     "method": {
       "bank_transfer": "무통장입금",
       "toss": "토스페이",
@@ -274,5 +280,11 @@
       "cancelled": "주문 취소",
       "refunded": "환불 완료"
     }
+  },
+    "Payment": {
+    "verifying": "결제를 확인하고 있습니다. 잠시만 기다려 주세요...",
+    "failedTitle": "결제가 완료되지 않았습니다",
+    "failedText": "결제가 취소되었거나 확인하지 못했습니다. 주문 상세 페이지에서 다시 결제하실 수 있습니다.",
+    "backToOrder": "주문 상세로 이동"
   }
 }

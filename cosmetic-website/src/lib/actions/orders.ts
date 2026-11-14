@@ -6,8 +6,20 @@ import { checkoutSchema } from "@/lib/validation/checkout";
 import { siteConfig } from "@/lib/site";
 
 export type PlaceOrderResult =
-  | { ok: true; orderNo: string }
+  | { ok: true; orderNo: string; total: number }
   | { ok: false; error: string; detail?: string };
+
+const CHANNEL_ENV: Record<string, string | undefined> = {
+  toss: process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY_TOSS,
+  kakao: process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY_KAKAO,
+  naver: process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY_NAVER,
+  card: process.env.NEXT_PUBLIC_PORTONE_CHANNEL_KEY_CARD,
+};
+
+function isMethodAvailable(method: string): boolean {
+  if (method === "bank_transfer") return true;
+  return Boolean(process.env.NEXT_PUBLIC_PORTONE_STORE_ID && CHANNEL_ENV[method]);
+}
 
 export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult> {
   const supabase = await createClient();
@@ -21,6 +33,8 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
     return { ok: false, error: parsed.error.issues[0]?.message ?? "generic" };
   }
   const d = parsed.data;
+
+  if (!isMethodAvailable(d.method)) return { ok: false, error: "methodUnavailable" };
 
   // merge duplicate products; prices are NOT taken from the browser
   const merged = new Map<string, number>();
@@ -61,7 +75,9 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
     return { ok: false, error: "generic" };
   }
 
-  const result = data as { order_no?: string } | null;
-  if (!result?.order_no) return { ok: false, error: "generic" };
-  return { ok: true, orderNo: result.order_no };
+  const result = data as { order_no?: string; total?: number } | null;
+  if (!result?.order_no || typeof result.total !== "number") {
+    return { ok: false, error: "generic" };
+  }
+  return { ok: true, orderNo: result.order_no, total: result.total };
 }

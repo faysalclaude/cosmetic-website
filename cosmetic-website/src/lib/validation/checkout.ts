@@ -11,7 +11,7 @@ export const checkoutSchema = z.object({
     )
     .min(1, "cartEmpty")
     .max(30, "cartEmpty"),
-  method: z.enum(["bank_transfer"]),
+  method: z.enum(["bank_transfer", "toss", "kakao", "naver", "card"]),
   recipient: z.string().trim().min(2, "invalidName").max(40, "invalidName"),
   phone: z.string().trim().regex(/^[0-9+\-\s]{9,20}$/, "invalidPhone"),
   postcode: z.string().trim().regex(/^\d{5}$/, "invalidPostcode"),

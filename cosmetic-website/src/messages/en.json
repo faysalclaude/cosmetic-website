@@ -201,6 +201,7 @@
     "naver": "Naver Pay",
     "card": "Credit / debit card",
     "soon": "Coming soon",
+    "onlineGuide": "A payment window opens when you place the order. The order is confirmed once the payment succeeds.",
     "bankGuide": "After you order, transfer the amount to the account shown. We ship once the deposit is confirmed.",
     "depositor": "Depositor name",
     "depositorHint": "If left empty, please transfer in the recipient's name.",
@@ -226,7 +227,9 @@
       "notLoggedIn": "You need to log in.",
       "productUnavailable": "Some products are no longer available.",
       "outOfStock": "{name} is out of stock.",
-      "postcodeUnavailable": "Could not load the address search. Please try again."
+      "postcodeUnavailable": "Could not load the address search. Please try again.",
+      "methodUnavailable": "The selected payment method is not available yet."
+
     }
   },
   "Order": {
@@ -251,6 +254,10 @@
     "carrier": "Carrier",
     "trackingNo": "Tracking number",
     "backToMyPage": "Back to My Page",
+        "payNow": "Pay now",
+    "payWorking": "Opening the payment window...",
+    "payPending": "Your payment has not been completed yet. Use the button below to pay.",
+    "paymentFailed": "The payment was not completed. Please try again.",
     "method": {
       "bank_transfer": "Bank transfer",
       "toss": "Toss Pay",
@@ -274,5 +281,11 @@
       "cancelled": "Cancelled",
       "refunded": "Refunded"
     }
+  },
+    "Payment": {
+    "verifying": "Confirming your payment. Please wait...",
+    "failedTitle": "The payment was not completed",
+    "failedText": "The payment was cancelled or could not be confirmed. You can pay again from the order page.",
+    "backToOrder": "Go to the order"
   }
 }

@@ -9,6 +9,12 @@ import { useAuthUser } from "@/lib/use-auth-user";
 import { siteConfig } from "@/lib/site";
 import { formatKRW, loc, shippingFor } from "@/lib/utils";
 import { placeOrderAction } from "@/lib/actions/orders";
+import {
+  isOnlineMethod,
+  isOnlineMethodEnabled,
+  requestOnlinePayment,
+  type OnlineMethod,
+} from "@/lib/payment";
 import ProductVisual from "@/components/product/ProductVisual";
 
 type DaumResult = {
@@ -45,13 +51,15 @@ function loadPostcodeScript(): Promise<void> {
   });
 }
 
-const METHODS = [
-  { id: "bank_transfer", key: "bankTransfer", enabled: true },
-  { id: "toss", key: "toss", enabled: false },
-  { id: "kakao", key: "kakao", enabled: false },
-  { id: "naver", key: "naver", enabled: false },
-  { id: "card", key: "card", enabled: false },
-] as const;
+type MethodId = "bank_transfer" | OnlineMethod;
+
+const METHODS: { id: MethodId; key: string }[] = [
+  { id: "bank_transfer", key: "bankTransfer" },
+  { id: "kakao", key: "kakao" },
+  { id: "toss", key: "toss" },
+  { id: "naver", key: "naver" },
+  { id: "card", key: "card" },
+];
 
 const inputClass =
   "mt-1.5 w-full rounded-xl border border-line bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-brand read-only:bg-cream";
@@ -66,6 +74,7 @@ export default function CheckoutForm() {
   const { items, clear } = useCartStore();
   const storedSubtotal = useCartStore(selectSubtotal);
 
+  const [method, setMethod] = useState<MethodId>("bank_transfer");
   const [recipient, setRecipient] = useState("");
   const [phone, setPhone] = useState("");
   const [postcode, setPostcode] = useState("");
@@ -88,6 +97,9 @@ export default function CheckoutForm() {
   const shipping = shippingFor(subtotal);
   const total = subtotal + shipping;
 
+  const isEnabled = (id: MethodId) =>
+    id === "bank_transfer" || (isOnlineMethod(id) && isOnlineMethodEnabled(id));
+
   function searchAddress() {
     if (!window.daum?.Postcode) {
       setError({ code: "postcodeUnavailable" });
@@ -108,9 +120,13 @@ export default function CheckoutForm() {
     setError(null);
     setBusy(true);
 
+    // read the order name before the cart is cleared
+    const first = list[0] ? loc(list[0].product.name, "ko") : "";
+    const orderName = list.length > 1 ? `${first} 외 ${list.length - 1}건` : first;
+
     const result = await placeOrderAction({
       items: list.map((i) => ({ productId: i.product.id, qty: i.qty })),
-      method: "bank_transfer",
+      method,
       recipient,
       phone,
       postcode,
@@ -127,9 +143,35 @@ export default function CheckoutForm() {
       return;
     }
 
+    // the order exists now, so the cart is done
     setPlaced(true);
     clear();
-    router.push(`/orders/${result.orderNo}?placed=1`);
+
+    if (!isOnlineMethod(method)) {
+      router.push(`/orders/${result.orderNo}?placed=1`);
+      return;
+    }
+
+    const payment = await requestOnlinePayment({
+      method,
+      orderNo: result.orderNo,
+      total: result.total,
+      orderName,
+      recipient,
+      phone,
+      email: user?.email,
+      locale,
+    });
+
+    if (!payment.ok) {
+      // not paid: the customer can try again from the order page
+      router.push(`/orders/${result.orderNo}?payment=failed`);
+      return;
+    }
+
+    router.push(
+      `/payment/complete?orderNo=${result.orderNo}&paymentId=${encodeURIComponent(payment.paymentId)}`,
+    );
   }
 
   function errorText() {
@@ -262,41 +304,55 @@ export default function CheckoutForm() {
           <section className="rounded-3xl border border-line bg-white p-6 md:p-8">
             <h2 className="mb-6 text-lg font-semibold">{t("payment")}</h2>
             <div className="space-y-3">
-              {METHODS.map((m) => (
-                <label
-                  key={m.id}
-                  className={`flex items-center justify-between rounded-2xl border p-4 text-sm ${
-                    m.enabled ? "border-brand bg-brand-soft/40" : "border-line opacity-50"
-                  }`}
-                >
-                  <span className="flex items-center gap-3 font-medium">
-                    <input
-                      type="radio"
-                      name="method"
-                      checked={m.enabled}
-                      disabled={!m.enabled}
-                      readOnly
-                      className="accent-[var(--color-brand)]"
-                    />
-                    {t(m.key)}
-                  </span>
-                  {!m.enabled && <span className="text-xs">{t("soon")}</span>}
-                </label>
-              ))}
+              {METHODS.map((m) => {
+                const enabled = isEnabled(m.id);
+                const selected = method === m.id;
+                return (
+                  <label
+                    key={m.id}
+                    className={`flex items-center justify-between rounded-2xl border p-4 text-sm ${
+                      !enabled
+                        ? "border-line opacity-50"
+                        : selected
+                          ? "cursor-pointer border-brand bg-brand-soft/40"
+                          : "cursor-pointer border-line hover:border-brand"
+                    }`}
+                  >
+                    <span className="flex items-center gap-3 font-medium">
+                      <input
+                        type="radio"
+                        name="method"
+                        checked={selected}
+                        disabled={!enabled}
+                        onChange={() => setMethod(m.id)}
+                        className="accent-[var(--color-brand)]"
+                      />
+                      {t(m.key)}
+                    </span>
+                    {!enabled && <span className="text-xs">{t("soon")}</span>}
+                  </label>
+                );
+              })}
             </div>
 
-            <div className="mt-6 rounded-2xl bg-cream p-5 text-sm">
-              <p className="text-muted">{t("bankGuide")}</p>
-              <label className="mt-4 block font-medium">
-                {t("depositor")}
-                <input
-                  value={depositor}
-                  onChange={(e) => setDepositor(e.target.value)}
-                  className={inputClass}
-                />
-                <span className="mt-1 block text-xs font-normal text-muted">{t("depositorHint")}</span>
-              </label>
-            </div>
+            {method === "bank_transfer" ? (
+              <div className="mt-6 rounded-2xl bg-cream p-5 text-sm">
+                <p className="text-muted">{t("bankGuide")}</p>
+                <label className="mt-4 block font-medium">
+                  {t("depositor")}
+                  <input
+                    value={depositor}
+                    onChange={(e) => setDepositor(e.target.value)}
+                    className={inputClass}
+                  />
+                  <span className="mt-1 block text-xs font-normal text-muted">
+                    {t("depositorHint")}
+                  </span>
+                </label>
+              </div>
+            ) : (
+              <p className="mt-6 rounded-2xl bg-cream p-5 text-sm text-muted">{t("onlineGuide")}</p>
+            )}
           </section>
         </div>
 
@@ -355,7 +411,10 @@ export default function CheckoutForm() {
           </label>
 
           {message && (
-            <p role="alert" className="mt-4 rounded-xl bg-brand-soft px-4 py-3 text-sm font-medium text-brand-dark">
+            <p
+              role="alert"
+              className="mt-4 rounded-xl bg-brand-soft px-4 py-3 text-sm font-medium text-brand-dark"
+            >
               {message}
             </p>
           )}
