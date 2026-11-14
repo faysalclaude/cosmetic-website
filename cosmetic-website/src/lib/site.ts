@@ -2,6 +2,11 @@ export const siteConfig = {
   logoText: "BELLAMARU",
   marketplaces: ["Coupang", "Naver Smart Store", "Amazon"],
   shipping: { fee: 3000, freeOver: 50000 },
+  bank: {
+    name: "KB국민은행 (DEMO)",
+    account: "000000-00-000000",
+    holder: "(DEMO) 데모컴퍼니",
+  },
   business: {
     company: "(DEMO) 데모컴퍼니",
     ceo: "홍길동",

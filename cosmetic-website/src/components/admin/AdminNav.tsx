@@ -4,8 +4,9 @@ import { Link, usePathname } from "@/i18n/navigation";
 
 const items = [
   { href: "/admin", label: "Dashboard" },
+  { href: "/admin/orders", label: "Orders" },
   { href: "/admin/products", label: "Products" },
-    { href: "/admin/categories", label: "Categories" },
+  { href: "/admin/categories", label: "Categories" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/login-logs", label: "Login logs" },
 ];
@@ -29,15 +30,8 @@ export default function AdminNav() {
           </Link>
         );
       })}
-        {["Orders"].map((label) => (
-        <span
-          key={label}
-          className="flex items-center justify-between rounded-xl px-4 py-2.5 text-sm text-muted/60"
-        >
-          {label}
-          <span className="rounded-full bg-cream px-2 py-0.5 text-[10px]">soon</span>
-        </span>
-      ))}
+        
+      
     </nav>
   );
 }
