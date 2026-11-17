@@ -13,3 +13,9 @@ export function formatDateTimeLocale(iso: string, locale: string): string {
     timeStyle: "short",
   }).format(new Date(iso));
 }
+export function formatDateLocale(iso: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "ko-KR", {
+    timeZone: "Asia/Seoul",
+    dateStyle: "long",
+  }).format(new Date(iso));
+}

@@ -57,3 +57,16 @@ export async function setTrackingAction(
 
   return { ok: true };
 }
+// Cancels unpaid online orders (older than 2 hours) and bank transfer orders without a deposit
+// (older than 72 hours). Their items go back in stock.
+export async function cancelStaleOrdersAction(): Promise<
+  { ok: true; count: number } | { ok: false; error: string }
+> {
+  await assertAdmin();
+  const { data, error } = await createAdminClient().rpc("cancel_stale_orders", {
+    p_pending_hours: 2,
+    p_deposit_hours: 72,
+  });
+  if (error) return { ok: false, error: error.message.slice(0, 200) };
+  return { ok: true, count: Number(data ?? 0) };
+}

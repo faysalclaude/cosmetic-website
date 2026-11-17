@@ -9,7 +9,8 @@
     "close": "Close",
     "addToCart": "Add to cart",
     "new": "NEW",
-    "learnMore": "LEARN MORE"
+    "learnMore": "LEARN MORE",
+    "skipToContent": "Skip to content"
   },
   "Announcement": {
     "text": "🔥 FLASH SALE: Get Up to 50% Discount on All Skincare Products!"
@@ -35,7 +36,9 @@
     "whereSubtitle": "Discover the perfect products tailored to your unique skincare routine!",
     "blogTitle": "Blog posts",
     "viewAll": "View all",
-    "categoriesTitle": "Shop by category"
+    "categoriesTitle": "Shop by category",
+    "metaTitle": "Bella Maru | Skincare for your skin concerns",
+    "metaDescription": "Discover clinical skincare products formulated for your skin concerns."
   },
   "Footer": {
     "connected": "connected with Bellamaru",
@@ -287,5 +290,60 @@
     "failedTitle": "The payment was not completed",
     "failedText": "The payment was cancelled or could not be confirmed. You can pay again from the order page.",
     "backToOrder": "Go to the order"
+  },
+    "Blog": {
+    "home": "Home",
+    "title": "Blog",
+    "subtitle": "Skincare tips and beauty stories.",
+    "empty": "There are no posts yet.",
+    "related": "More articles",
+    "shopCta": "Browse products"
+  },
+    "Pages": {
+    "home": "Home",
+    "updated": "Last updated: {date}",
+    "empty": "There is no content yet.",
+    "faqMore": "Did not find what you were looking for?",
+    "contactLink": "Contact us"
+  },
+  "Contact": {
+    "home": "Home",
+    "title": "Contact Us",
+    "subtitle": "Leave us a message and we will get back to you.",
+    "infoTitle": "Contact details",
+    "company": "Company",
+    "address": "Address",
+    "tel": "Tel",
+    "email": "Email",
+    "demoNote": "* This is a demo site. The details above are placeholders.",
+    "name": "Name",
+    "emailLabel": "Email",
+    "phone": "Phone (optional)",
+    "subject": "Subject (optional)",
+    "message": "Your message",
+    "agree": "I agree to the collection and use of my name, email and phone number to handle this enquiry.",
+    "privacyLink": "Read the Privacy Policy",
+    "send": "Send",
+    "sending": "Sending...",
+    "thanksTitle": "Your message has been received",
+    "thanksText": "Thank you. We will reply to the email address you provided.",
+    "sendAnother": "Send another message",
+    "errors": {
+      "generic": "Something went wrong. Please try again in a moment.",
+      "invalidName": "Please enter a valid name.",
+      "invalidEmail": "Please enter a valid email address.",
+      "invalidPhone": "Please enter a valid phone number.",
+      "subjectTooLong": "The subject is too long.",
+      "messageShort": "Please write at least 10 characters.",
+      "messageLong": "The message is too long (2000 characters maximum).",
+      "mustAgree": "Please agree to the collection of your information.",
+      "tooMany": "You have sent too many messages in a short time. Please try again later."
+    }
+  },
+    "NotFound": {
+    "title": "Page not found",
+    "text": "The address may be wrong, or the page may have been moved or removed.",
+    "home": "Back to home",
+    "products": "Browse products"
   }
 }

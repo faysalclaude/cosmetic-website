@@ -9,7 +9,8 @@
     "close": "닫기",
     "addToCart": "장바구니 담기",
     "new": "NEW",
-    "learnMore": "자세히 보기"
+    "learnMore": "자세히 보기",
+    "skipToContent": "본문으로 건너뛰기"
   },
   "Announcement": {
     "text": "🔥 플래시 세일: 전 스킨케어 제품 최대 50% 할인!"
@@ -35,7 +36,9 @@
     "whereSubtitle": "나만의 스킨케어 루틴에 꼭 맞는 제품을 만나보세요!",
     "blogTitle": "블로그",
     "viewAll": "전체 보기",
-    "categoriesTitle": "카테고리별 쇼핑"
+    "categoriesTitle": "카테고리별 쇼핑",
+    "metaTitle": "벨라마루 | 피부 고민에 맞춘 스킨케어",
+    "metaDescription": "피부 고민에 맞춘 임상 처방 스킨케어 제품을 만나보세요."
   },
   "Footer": {
     "connected": "벨라마루와 함께하세요",
@@ -286,5 +289,60 @@
     "failedTitle": "결제가 완료되지 않았습니다",
     "failedText": "결제가 취소되었거나 확인하지 못했습니다. 주문 상세 페이지에서 다시 결제하실 수 있습니다.",
     "backToOrder": "주문 상세로 이동"
+  },
+    "Blog": {
+    "home": "홈",
+    "title": "블로그",
+    "subtitle": "피부 관리 팁과 뷰티 이야기를 만나보세요.",
+    "empty": "아직 게시글이 없습니다.",
+    "related": "다른 글 보기",
+    "shopCta": "제품 둘러보기"
+  },
+    "Pages": {
+    "home": "홈",
+    "updated": "최종 수정: {date}",
+    "empty": "등록된 내용이 없습니다.",
+    "faqMore": "원하시는 답변을 찾지 못하셨나요?",
+    "contactLink": "문의하기"
+  },
+  "Contact": {
+    "home": "홈",
+    "title": "문의하기",
+    "subtitle": "궁금하신 점을 남겨 주시면 확인 후 답변드리겠습니다.",
+    "infoTitle": "연락처",
+    "company": "상호",
+    "address": "주소",
+    "tel": "전화",
+    "email": "이메일",
+    "demoNote": "※ 데모 사이트입니다. 위 연락처는 예시입니다.",
+    "name": "이름",
+    "emailLabel": "이메일",
+    "phone": "연락처 (선택)",
+    "subject": "제목 (선택)",
+    "message": "문의 내용",
+    "agree": "문의 처리를 위해 이름, 이메일, 연락처를 수집·이용하는 것에 동의합니다.",
+    "privacyLink": "개인정보처리방침 보기",
+    "send": "보내기",
+    "sending": "보내는 중...",
+    "thanksTitle": "문의가 접수되었습니다",
+    "thanksText": "소중한 의견 감사합니다. 입력하신 이메일로 답변드리겠습니다.",
+    "sendAnother": "다른 문의 보내기",
+    "errors": {
+      "generic": "전송 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+      "invalidName": "이름을 올바르게 입력해 주세요.",
+      "invalidEmail": "올바른 이메일 주소를 입력해 주세요.",
+      "invalidPhone": "올바른 연락처를 입력해 주세요.",
+      "subjectTooLong": "제목이 너무 깁니다.",
+      "messageShort": "문의 내용을 10자 이상 입력해 주세요.",
+      "messageLong": "문의 내용이 너무 깁니다. (2000자 이내)",
+      "mustAgree": "개인정보 수집·이용에 동의해 주세요.",
+      "tooMany": "짧은 시간에 너무 많이 보내셨습니다. 잠시 후 다시 시도해 주세요."
+    }
+  },
+    "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "text": "주소가 잘못되었거나 페이지가 이동 또는 삭제되었을 수 있습니다.",
+    "home": "홈으로",
+    "products": "제품 보기"
   }
 }

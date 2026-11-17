@@ -1,11 +1,11 @@
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { blogPosts } from "@/lib/products";
-import { loc } from "@/lib/utils";
+import type { BlogPost } from "@/types";
+import BlogCard from "@/components/blog/BlogCard";
 
-export default function BlogPreview() {
+export default function BlogPreview({ posts }: { posts: BlogPost[] }) {
   const t = useTranslations("Home");
-  const locale = useLocale();
+  if (posts.length === 0) return null;
 
   return (
     <section className="container-page py-16">
@@ -16,22 +16,8 @@ export default function BlogPreview() {
         </Link>
       </div>
       <div className="grid gap-8 md:grid-cols-3">
-        {blogPosts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
-            <div
-              className="aspect-[4/3] rounded-2xl transition-transform duration-300 group-hover:scale-[1.02]"
-              style={{
-                background: `linear-gradient(135deg, ${post.tint}, #ffffff)`,
-              }}
-            />
-            <p className="mt-4 text-xs font-medium text-brand">
-              {loc(post.category, locale)}
-            </p>
-            <h3 className="mt-1 font-semibold group-hover:text-brand">
-              {loc(post.title, locale)}
-            </h3>
-            <p className="mt-1 text-sm text-muted">{loc(post.excerpt, locale)}</p>
-          </Link>
+        {posts.map((post) => (
+          <BlogCard key={post.slug} post={post} />
         ))}
       </div>
     </section>

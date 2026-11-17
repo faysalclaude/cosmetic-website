@@ -4,10 +4,13 @@ import { Link, usePathname } from "@/i18n/navigation";
 
 const items = [
   { href: "/admin", label: "Dashboard" },
+    { href: "/admin/blog", label: "Blog" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/categories", label: "Categories" },
   { href: "/admin/users", label: "Users" },
+  { href: "/admin/pages", label: "Pages" },
+  { href: "/admin/messages", label: "Messages" },
   { href: "/admin/login-logs", label: "Login logs" },
 ];
 

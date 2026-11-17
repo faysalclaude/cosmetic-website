@@ -39,5 +39,7 @@ export type BlogPost = {
   category: Localized;
   title: Localized;
   excerpt: Localized;
-  tint: string;
+  content: Localized;
+  coverUrl: string | null;
+  publishedAt: string | null;
 };

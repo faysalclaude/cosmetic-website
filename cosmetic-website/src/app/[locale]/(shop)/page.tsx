@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import HeroSlider from "@/components/home/HeroSlider";
 import CategoryStrip from "@/components/home/CategoryStrip";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
@@ -6,11 +8,37 @@ import WhereToBuy from "@/components/home/WhereToBuy";
 import BlogPreview from "@/components/home/BlogPreview";
 import { getCategories } from "@/lib/data/categories";
 import { getProducts } from "@/lib/data/products";
+import { getPublishedPosts } from "@/lib/data/blog";
 
 export const revalidate = 60;
 
+type Params = Promise<{ locale: string }>;
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Home" });
+  return {
+    title: { absolute: t("metaTitle") },
+    description: t("metaDescription"),
+    alternates: {
+      canonical: locale === "en" ? "/en" : "/",
+      languages: { ko: "/", en: "/en" },
+    },
+    openGraph: {
+      title: t("metaTitle"),
+      description: t("metaDescription"),
+      type: "website",
+      locale: locale === "en" ? "en_US" : "ko_KR",
+    },
+  };
+}
+
 export default async function HomePage() {
-  const [products, categories] = await Promise.all([getProducts(), getCategories()]);
+  const [products, categories, posts] = await Promise.all([
+    getProducts(),
+    getCategories(),
+    getPublishedPosts(3),
+  ]);
   const withShowcase = products.find((p) => p.showcase);
 
   const counts: Record<string, number> = {};
@@ -22,7 +50,7 @@ export default async function HomePage() {
       <CategoryStrip categories={categories} counts={counts} />
       <FeaturedProducts products={products} />
       <HomeShowcase
-        fallback={
+        showcase={
           withShowcase?.showcase
             ? {
                 name: withShowcase.name,
@@ -37,7 +65,7 @@ export default async function HomePage() {
         }
       />
       <WhereToBuy />
-      <BlogPreview />
+      <BlogPreview posts={posts} />
     </>
   );
 }

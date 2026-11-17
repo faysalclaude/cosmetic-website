@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/auth";
 import { getAdminOrders } from "@/lib/data/orders";
 import { formatDateTime } from "@/lib/format";
 import { formatKRW } from "@/lib/utils";
+import StaleOrdersButton from "@/components/admin/StaleOrdersButton";
 import {
   METHOD_LABEL,
   ORDER_STATUSES,
@@ -26,8 +27,14 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Orders</h1>
-      <p className="mt-1 text-sm text-muted">{orders.length} orders</p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Orders</h1>
+          <p className="mt-1 text-sm text-muted">{orders.length} orders</p>
+        </div>
+        <StaleOrdersButton />
+      </div>
+
 
       <div className="mt-5 flex flex-wrap gap-2">
         <Link href="/admin/orders" className={tab(!filter)}>

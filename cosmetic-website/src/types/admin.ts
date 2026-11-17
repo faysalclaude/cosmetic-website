@@ -25,3 +25,25 @@ export type ProductFormValues = {
   isActive: boolean;
   sortOrder: string;
 };
+export type ProductImageInfo = { id: string; url: string };
+
+export type ShowcaseInfo = {
+  imageUrl: string;
+  accent: string;
+  soft: string;
+  deep: string;
+  isApproved: boolean;
+};
+export type BlogFormValues = {
+  slug: string;
+  categoryKo: string;
+  categoryEn: string;
+  titleKo: string;
+  titleEn: string;
+  excerptKo: string;
+  excerptEn: string;
+  contentKo: string;
+  contentEn: string;
+  coverUrl: string;
+  isPublished: boolean;
+};
