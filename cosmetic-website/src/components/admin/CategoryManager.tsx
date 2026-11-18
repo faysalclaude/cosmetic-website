@@ -189,8 +189,10 @@ function AddCategory() {
       onSubmit={onSubmit}
       onChange={(e) => {
         // fill the address from the English name until the admin edits the address by hand
-        const target = e.target as HTMLInputElement;
-        if (target.name === "nameEn" && !idTouched) setId(slugify(target.value));
+        const target: EventTarget = e.target;
+        if (target instanceof HTMLInputElement && target.name === "nameEn" && !idTouched) {
+          setId(slugify(target.value));
+        }
       }}
       className="rounded-2xl border-2 border-dashed border-line bg-cream/60 p-6"
     >
